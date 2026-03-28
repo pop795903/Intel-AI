@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Intel AI Assistant</title>
+    <!-- Puter.js works perfectly once hosted on HTTPS -->
+    <script src="https://js.puter.com/v2/"></script>
+</head>
+<body style="font-family: sans-serif; padding: 20px;">
+
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px;">
+    <h2 style="margin: 0;">Welcome to <b>Intel AI!</b></h2>
+    
+    <input type="text" id="userInput" placeholder="Ask me anything..." style="padding: 10px; width: 300px; border-radius: 5px; border: 1px solid #ccc;">
+    
+    <div id="aiResponse" style="color: #0071c5; font-style: italic; min-height: 40px; max-width: 400px; line-height: 1.4;">
+        AI: Waiting for your question...
+    </div>
+
+    <button onclick="processAI()" style="padding: 8px 16px; cursor: pointer; background-color: #0071c5; color: white; border: none; border-radius: 4px;">Ask AI</button>
+    <button onclick="alert('phone: 669-321-8683 \nemail: contact@intel-ai.example.com')" style="padding: 8px 16px; cursor: pointer;">About Us</button>
+</div>
+
+<script>
+    async function processAI() {
+        const inputField = document.getElementById('userInput');
+        const responseEl = document.getElementById('aiResponse');
+        const text = inputField.value.trim();
+
+        if (!text) return;
+
+        responseEl.innerText = "AI: Searching and thinking...";
+
+        try {
+            // This call succeeds only on a live HTTPS website
+            const response = await puter.ai.chat(text);
+            responseEl.innerText = "AI: " + response;
+        } catch (error) {
+            responseEl.innerText = "AI: Still seeing an error? Make sure you are viewing this on a live HTTPS link, not a local file.";
+            console.error(error);
+        }
+
+        inputField.value = ""; 
+    }
+
+    document.getElementById('userInput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') processAI();
+    });
+</script>
+
+</body>
+</html>
